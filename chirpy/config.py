@@ -45,10 +45,11 @@ class ChirpyConfiguration(confire.Configuration):
         os.path.abspath("conf/chirpy.yaml"),     # Local configuration
     ]
 
-    debug    = True
-    testing  = True
-    api_key  = None
-    fixtures = FIXTURES_DIR
+    debug      = True
+    testing    = True
+    api_key    = None
+    api_secret = None
+    fixtures   = FIXTURES_DIR
 
 ## Load settings immediately for import
 settings = ChirpyConfiguration.load()
