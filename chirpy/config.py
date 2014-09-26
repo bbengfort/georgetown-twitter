@@ -20,6 +20,13 @@ import os
 import confire
 
 ##########################################################################
+## Constants
+##########################################################################
+
+PROJECT_DIR  = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+FIXTURES_DIR = os.path.join(PROJECT_DIR, "fixtures")
+
+##########################################################################
 ## Configuration
 ##########################################################################
 
@@ -41,6 +48,7 @@ class ChirpyConfiguration(confire.Configuration):
     debug    = True
     testing  = True
     api_key  = None
+    fixtures = FIXTURES_DIR
 
 ## Load settings immediately for import
 settings = ChirpyConfiguration.load()

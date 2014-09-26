@@ -4,3 +4,4 @@
 debug: True
 testing: False
 api_key: "[INSERT API KEY HERE]"
+fixtures: "path/to/download/files.json"
