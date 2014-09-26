@@ -1,0 +1,6 @@
+# Copy and paste this into "conf/chirpy.yaml" and then fill in the values
+# below correctly for your configuration.
+
+debug: True
+testing: False
+api_key: "[INSERT API KEY HERE]"
