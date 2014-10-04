@@ -22,6 +22,7 @@ import json
 from chirpy.config import settings
 from twython import Twython
 from datetime import datetime
+from chirpy.db import connect
 
 ##########################################################################
 ## TwitterClient
@@ -37,6 +38,7 @@ class TwitterClient(object):
         self.secret  = api_secret or settings.get('api_secret', None)
         self.token   = self.get_access_token()
         self.twitter = Twython(self.appkey, access_token=self.token)
+        self.db      = connect()
 
     def get_access_token(self):
         twitter = Twython(self.appkey, self.secret, oauth_version=2)
@@ -53,15 +55,18 @@ class TwitterClient(object):
         Executes a twitter search and saves it to disk, returns the number
         of Tweets that were fetched with the API.
         """
-        data = self.search(query, **kwargs)
-        name = "%s-%s.json" % (query.replace(" ", "_"), datetime.now().strftime("%Y%m%dT%H%M%S"))
-        path = os.path.join(settings.get('fixtures'), name)
-        with open(path, 'w') as f:
-            json.dump(data, f)
+        ts     = datetime.now()
+        data   = self.search(query, **kwargs)
+        search = data['search_metadata']
+        search['timestamp'] = ts
+
+        self.db.searches.insert(search)
+        for status in data['statuses']:
+            self.db.tweets.insert(status)
 
         return data["search_metadata"]["count"]
 
 if __name__ == '__main__':
     client = TwitterClient()
-    tweets = client.ingest('python programming')
+    tweets = client.ingest('#NCIS')
     print "fetched %i tweets" % tweets

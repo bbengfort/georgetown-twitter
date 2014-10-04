@@ -28,15 +28,18 @@ PATH    = os.path.abspath(PROJECT)
 
 sys.path.append(os.path.abspath(PROJECT))
 
-import chirpy
+from chirpy.twitter import TwitterClient
 
 def main(*args):
 
     parser = argparse.ArgumentParser(description="Command line client for Chirpy",
             version="0.1", epilog="No bugs please!")
+    parser.add_argument('query', type=str, nargs="+", help="search term to ingest")
 
     args   = parser.parse_args()
-    print "Not Implemented yet"
+    client = TwitterClient()
+    tweets = client.ingest(" ".join(args.query))
+    print "fetched %i tweets" % tweets
 
 if __name__ == '__main__':
     main(*sys.argv[1:])

@@ -30,6 +30,15 @@ FIXTURES_DIR = os.path.join(PROJECT_DIR, "fixtures")
 ## Configuration
 ##########################################################################
 
+class MongoConfiguration(confire.Configuration):
+    """
+    Configuration for the Mongo database
+    """
+
+    host = "localhost"
+    port = 27017
+    database = "tweets"
+
 class ChirpyConfiguration(confire.Configuration):
     """
     Meaningful defaults and required configurations.
@@ -50,6 +59,7 @@ class ChirpyConfiguration(confire.Configuration):
     api_key    = None
     api_secret = None
     fixtures   = FIXTURES_DIR
+    mongo      = MongoConfiguration()
 
 ## Load settings immediately for import
 settings = ChirpyConfiguration.load()
