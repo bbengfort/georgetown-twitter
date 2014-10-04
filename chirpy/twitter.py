@@ -42,11 +42,11 @@ class TwitterClient(object):
         twitter = Twython(self.appkey, self.secret, oauth_version=2)
         return twitter.obtain_access_token()
 
-    def search(self, query):
+    def search(self, query, **kwargs):
         """
         Executes a Twitter search
         """
-        return self.twitter.search(q=query)
+        return self.twitter.search(q=query, **kwargs)
 
     def ingest(self, query, **kwargs):
         """
